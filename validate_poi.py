@@ -18,6 +18,8 @@ from sklearn import tree
 import numpy as np
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
 
 data_dict = pickle.load(open("../final_project/final_project_dataset.pkl", "r") )
 
@@ -39,7 +41,6 @@ pred = clf.predict(features_test)
 score = accuracy_score(labels_test,pred)
 
 print pred
-print pred.size
 print "accuracy = ",score
 
 print labels_test
@@ -47,15 +48,21 @@ print labels_test
 accurate_count = 0
 accurate_count_if_zero = 0
 for label_test, predItem in zip(labels_test,pred):
-    print "test label: ", label_test, "pred label: ", predItem
+    acc = " inaccurate"
     if label_test == predItem:
-        print "accurate"
+        acc = " accurate"
         accurate_count = accurate_count + 1 
     if label_test == 0:
         accurate_count_if_zero = accurate_count_if_zero + 1
+    print "test label: ", label_test, "pred label: ", predItem, acc
+print "predictions size: ", pred.size
+print "test labels size: ", len(labels_test)
 print "accurate_count: ", accurate_count
+print "accuracy calculated: ", float(accurate_count) / pred.size
 print "accurate_count_if_zero: ", accurate_count_if_zero
-print "accuracy_if_zero: ", float(accurate_count_if_zero) / 29.0
+print "accuracy_if_zero: ", float(accurate_count_if_zero) / pred.size
+print "precision: ", precision_score(labels_test,pred)
+print "recall: ", recall_score(labels_test,pred)
 
 
 
